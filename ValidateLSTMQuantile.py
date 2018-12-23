@@ -1,3 +1,6 @@
+import torch
+import torch.nn as nn
+
 class ValidateLSTMQuantile(nn.Module):
   def __init__(self, quantiles, input_size, hidden_size, num_layers, output_size):
     super(ValidateLSTMQuantile, self).__init__()
