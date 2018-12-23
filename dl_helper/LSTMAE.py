@@ -3,9 +3,8 @@ import torch.nn as nn
 import numpy as np
 
 class EncoderRNN(nn.Module):
-  def __init__(self, input_size, hidden_size, num_layers, isCuda, cutoff=0):
+  def __init__(self, input_size, hidden_size, num_layers, isCuda):
       super(EncoderRNN, self).__init__()
-      self.cutoff = cutoff
       self.input_size = input_size
       self.hidden_size = hidden_size
       self.num_layers = num_layers
@@ -51,8 +50,9 @@ class DecoderRNN(nn.Module):
       return decoded_output
       
 class LSTMAE(nn.Module):
-  def __init__(self, input_size, hidden_size, num_layers, isCuda):
+  def __init__(self, input_size, hidden_size, num_layers, isCuda, cutoff=0):
       super(LSTMAE, self).__init__()
+      self.cutoff = cutoff
       self.encoder = EncoderRNN(input_size, hidden_size, num_layers, isCuda)
       self.decoder = DecoderRNN(hidden_size, input_size, num_layers, isCuda)
 

@@ -3,9 +3,8 @@ import torch.nn as nn
 import numpy as np
 
 class ConvLSTMEncoder(nn.Module):
-  def __init__(self, cutoff=0):
+  def __init__(self):
       super(ConvLSTMEncoder, self).__init__()    
-      self.cutoff = cutoff
       self.conv1 = nn.Conv1d(100, 400, 64, stride=8)
       self.r1 = nn.ReLU()
       self.lstm1 = nn.LSTM(243, 128, 1, batch_first=True)
@@ -62,8 +61,9 @@ class ConvLSTMDecoder(nn.Module):
     return conv2_out
   
 class ConvLSTMAE(nn.Module):
-  def __init__(self):
+  def __init__(self, cutoff=0):
       super(ConvLSTMAE, self).__init__()
+      self.cutoff = cutoff
       self.encoder = ConvLSTMEncoder().cuda(0)
       self.decoder = ConvLSTMDecoder().cuda(0)
 
