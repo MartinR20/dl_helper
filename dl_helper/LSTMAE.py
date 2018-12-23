@@ -3,8 +3,9 @@ import torch.nn as nn
 import numpy as np
 
 class EncoderRNN(nn.Module):
-  def __init__(self, input_size, hidden_size, num_layers, isCuda):
+  def __init__(self, input_size, hidden_size, num_layers, isCuda, cutoff=0):
       super(EncoderRNN, self).__init__()
+      self.cutoff = cutoff
       self.input_size = input_size
       self.hidden_size = hidden_size
       self.num_layers = num_layers
@@ -58,6 +59,6 @@ class LSTMAE(nn.Module):
   def forward(self, input):
       encoded_input = self.encoder(input)
       decoded_output = self.decoder(encoded_input)
-      outputs = decoded_output[:,n_steps-1,:] # keep only last output of sequence
+      outputs = decoded_output[:,self.cutoff-1,:] # keep only last output of sequence
 
       return outputs

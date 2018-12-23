@@ -2,8 +2,9 @@ import torch
 import torch.nn as nn
 
 class ValidateLSTMQuantile(nn.Module):
-  def __init__(self, quantiles, input_size, hidden_size, num_layers, output_size):
+  def __init__(self, quantiles, input_size, hidden_size, num_layers, output_size, cutoff=0):
     super(ValidateLSTMQuantile, self).__init__()
+    self.cutoff = cutoff
     self.input_size = input_size
     self.hidden_size = hidden_size
     self.num_layers = num_layers
@@ -26,5 +27,5 @@ class ValidateLSTMQuantile(nn.Module):
       stacked_outputs = torch.cat((stacked_outputs, layer_output))
         
     outputs = stacked_outputs.view(len(self.quantile_layers), -1, n_steps, self.output_size)
-    outputs = outputs[:, :,n_steps-1,:] # keep only last output of sequence
+    outputs = outputs[:, :,self.cutoff-1,:] # keep only last output of sequence
     return outputs

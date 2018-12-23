@@ -2,8 +2,9 @@ import torch
 import torch.nn as nn
 
 class ValidateLSTM(nn.Module):
-  def __init__(self, input_size, hidden_size, num_layers, output_size):
+  def __init__(self, input_size, hidden_size, num_layers, output_size, cutoff=0):
     super(ValidateLSTM, self).__init__()
+    self.cutoff = cutoff
     self.input_size = input_size
     self.hidden_size = hidden_size
     self.num_layers = num_layers
@@ -18,5 +19,5 @@ class ValidateLSTM(nn.Module):
     stacked_rnn_outputs = rnn_outputs.contiguous().view(-1, self.hidden_size)
     stacked_outputs = self.linear(stacked_rnn_outputs)
     outputs = stacked_outputs.view(-1, n_steps, self.output_size)
-    outputs = outputs[:,n_steps-1,:] # keep only last output of sequence
+    outputs = outputs[:,self.cutoff-1,:] # keep only last output of sequence
     return outputs
