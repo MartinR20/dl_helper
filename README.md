@@ -1,2 +1,2 @@
 # dl_helper
-Helper classes for colab notebook
+Helper classes for project in colab notebook
