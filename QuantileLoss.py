@@ -1,3 +1,5 @@
+import torch
+
 class QuantileLoss(nn.modules.loss._Loss):
   """
     QauntileLoss is basically MSE but with the adittion that
