@@ -1,3 +1,6 @@
+import torch
+import torch.nn as nn
+
 class ConvLSTMEncoder(nn.Module):
   def __init__(self):
       super(ConvLSTMEncoder, self).__init__()    
