@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import sklearn
 import sklearn.preprocessing
+import psutil
 
 def get_matrix(input_df, data_shape, seq_len):
   company_names = set(input_df.symbol)
