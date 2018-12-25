@@ -5,10 +5,10 @@ import numpy as np
 class ConvLSTMAE_v1(nn.Module):
   #epoch:99 train_loss:0.0003731108154170215 valid_loss:0.019016167148947716
 
-  def __init__(self, cutoff=0):
+  def __init__(self, cutoff=0, lstm_layers=5):
     super(ConvLSTMAE_v1, self).__init__()
     self.cutoff = cutoff
-    
+
     #encode
     self.conv0 = nn.Conv1d(100,200, 4, stride=2, padding=1)
     self.tanconv0 = nn.Tanh()
@@ -24,7 +24,7 @@ class ConvLSTMAE_v1(nn.Module):
     self.relumaxpool1 = nn.ReLU()
     
     #lstm
-    self.lstm0 = nn.LSTM(20,20,5,batch_first=True)
+    self.lstm0 = nn.LSTM(20,20,lstm_layers,batch_first=True)
     self.tanlstm0 = nn.Tanh()
 
     nn.init.xavier_uniform(self.lstm0.weight_ih_l0, gain=np.sqrt(2))
