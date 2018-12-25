@@ -6,7 +6,7 @@ class ConvLSTMAE_v1(nn.Module):
   #epoch:99 train_loss:0.0003731108154170215 valid_loss:0.019016167148947716
 
   def __init__(self, cutoff=0):
-    super(AE, self).__init__()
+    super(ConvLSTMAE_v1, self).__init__()
     self.cutoff = cutoff
     
     #encode

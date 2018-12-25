@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-class ConvLSTMEncoder(nn.Module):
+class ConvLSTMEncoder_v0(nn.Module):
   def __init__(self):
-      super(ConvLSTMEncoder, self).__init__()    
+      super(ConvLSTMEncoder_v0, self).__init__()    
       self.conv1 = nn.Conv1d(100, 400, 64, stride=8)
       self.r1 = nn.ReLU()
       self.lstm1 = nn.LSTM(243, 128, 1, batch_first=True)
