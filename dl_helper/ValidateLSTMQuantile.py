@@ -27,5 +27,5 @@ class ValidateLSTMQuantile(nn.Module):
       stacked_outputs = torch.cat((stacked_outputs, layer_output))
         
     outputs = stacked_outputs.view(len(self.quantile_layers), -1, n_steps, self.output_size)
-    outputs = outputs[:, :,self.cutoff-1:-1,:] # keep only last output of sequence
+    outputs = outputs[:, :,self.cutoff:,:] # keep only last output of sequence
     return outputs

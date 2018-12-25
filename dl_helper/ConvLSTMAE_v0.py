@@ -70,6 +70,6 @@ class ConvLSTMAE_v0(nn.Module):
   def forward(self, input):
       encoded_input = self.encoder(input)
       decoded_output = self.decoder(encoded_input)
-      outputs = decoded_output[:,self.cutoff-1:-1,:] # keep only last output of sequence
+      outputs = decoded_output[:,self.cutoff:,:] # keep only last output of sequence
 
       return outputs
