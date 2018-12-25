@@ -60,7 +60,7 @@ class ConvLSTMDecoder(nn.Module):
     conv2_out = self.r1(conv2_out)
     return conv2_out
   
-class ConvLSTMAE(nn.Module):
+class ConvLSTMAE_v0(nn.Module):
   def __init__(self, cutoff=0):
       super(ConvLSTMAE, self).__init__()
       self.cutoff = cutoff
