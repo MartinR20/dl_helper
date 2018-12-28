@@ -52,7 +52,9 @@ class dataObj():
     data = []
 
     df.drop(['volume'],1,inplace=True) 
-    df.sort_values([u'symbol',u'date'],inplace=True)
+    df['colFromIndex'] = df.index
+    df = df.sort_values(['symbol', 'colFromIndex'])
+    df = df.set_index('colFromIndex')
 
     ## initalize object for normalization
     min_max_scaler = sklearn.preprocessing.MinMaxScaler()
