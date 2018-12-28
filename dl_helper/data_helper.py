@@ -10,7 +10,7 @@ class dataObj():
   def __init__(self, path, valid_percentage, test_percentage, seq_len):
     print('...loading data')
     # import all stock prices 
-    df = pd.read_csv(path, index_col = 0)
+    df = pd.read_csv(path, index_col = 0, encoding='utf-8-sig')
     
     print('...processing data')
     data, self.companys = self.__get_matrix__(df, (1762,4), seq_len)
@@ -51,7 +51,7 @@ class dataObj():
     data = []
 
     df.drop(['volume'],1,inplace=True) 
-    df.sort_values(['symbol',df.index.name],inplace=True)
+    df.sort_values(['symbol','date'],inplace=True)
 
     ## initalize object for normalization
     min_max_scaler = sklearn.preprocessing.MinMaxScaler()
