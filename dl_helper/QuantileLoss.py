@@ -16,10 +16,10 @@ class QuantileLoss(nn.modules.loss._Loss):
   
   def __init__(self, quantiles, size_average=None, reduce=None, reduction='elementwise_mean'):
     super(QuantileLoss, self).__init__(size_average, reduce, reduction)
-    self.quantiles = torch.tensor(quantiles, device=0)
+    self.quantiles = torch.tensor(quantiles)
     
   def forward(self, output, y):
-    losses = torch.empty([0], device=0)
+    losses = torch.empty([0])
     
     for i, quantile in enumerate(quantiles):
       error = y - output[i]

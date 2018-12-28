@@ -7,43 +7,37 @@ from tqdm import tqdm
 import torch
 
 class dataObj():
-  def __init__(self, path, valid_percentage, test_percentage, seq_len, big=False):
+  def __init__(self, path, valid_percentage, test_percentage, seq_len):
     print('...loading data')
     # import all stock prices 
     df = pd.read_csv(path, index_col = 0)
     
     print('...processing data')
-    data, companys = self.__get_matrix__(df, (1762,4), seq_len)
+    data, self.companys = self.__get_matrix__(df, (1762,4), seq_len)
     
     print(f'Raw data shape: {data.shape}')
 
-    if not big:
-      array_list = self.__seperate_data__(valid_percentage, test_percentage, data)  
+    array_list = self.__seperate_data__(valid_percentage, test_percentage, data)  
 
-      self.x_train = torch.from_numpy(array_list[0]).float()
-      self.y_train = torch.from_numpy(array_list[1]).float()
-      self.x_valid = torch.from_numpy(array_list[2]).float()
-      self.y_valid = torch.from_numpy(array_list[3]).float()
-      self.x_test  = torch.from_numpy(array_list[4]).float()
-      self.y_test  = torch.from_numpy(array_list[5]).float()
-
-    else:
-      array_list = self.__seperate_data__(valid_percentage, test_percentage, data)  
-
-      self.x_train, self.y_train =  self.__reshape__(array_list[0], array_list[1])
-      self.x_valid, self.y_valid =  self.__reshape__(array_list[2], array_list[3])
-      self.x_test, self.y_test =  self.__reshape__(array_list[4], array_list[5])
+    self.x_train = torch.from_numpy(array_list[0]).float()
+    self.y_train = torch.from_numpy(array_list[1]).float()
+    self.x_valid = torch.from_numpy(array_list[2]).float()
+    self.y_valid = torch.from_numpy(array_list[3]).float()
+    self.x_test  = torch.from_numpy(array_list[4]).float()
+    self.y_test  = torch.from_numpy(array_list[5]).float()
 
     print(f'Reshaped size: \n  train:{self.x_train.shape} \n  validtion:{self.x_valid.shape} \n  test:{self.x_test.shape}')
 
     print('...finished')
     print(f'number of different stocks: {len(list(set(df.symbol)))}')
 
+  def reshape(self):
+    self.x_train, self.y_train =  self.__reshape__(self.x_train, self.y_train)
+    self.x_valid, self.y_valid =  self.__reshape__(self.x_valid, self.y_valid)
+    self.x_test, self.y_test =  self.__reshape__(self.x_test, self.y_test)
+
   @staticmethod
   def __reshape__(X, Y):
-    X = torch.from_numpy(X).float()
-    Y = torch.from_numpy(Y).float()
-
     x_sz = X.size()
     X = X.permute(1,2,0,3).contiguous().view(x_sz[1],x_sz[2],x_sz[0]*x_sz[3])
     

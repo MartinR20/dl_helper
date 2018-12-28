@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-class ConvLSTMEncoder_v0(nn.Module):
+class ConvLSTMEncoder(nn.Module):
   def __init__(self):
-      super(ConvLSTMEncoder_v0, self).__init__()    
+      super(ConvLSTMEncoder, self).__init__()    
       self.conv1 = nn.Conv1d(100, 400, 64, stride=8)
       self.r1 = nn.ReLU()
       self.lstm1 = nn.LSTM(243, 128, 1, batch_first=True)
@@ -15,10 +15,10 @@ class ConvLSTMEncoder_v0(nn.Module):
       self.r4 = nn.ReLU()
 
       #initialize weights
-      nn.init.xavier_uniform(self.lstm1.weight_ih_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm1.weight_hh_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm2.weight_ih_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm2.weight_hh_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm1.weight_ih_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm1.weight_hh_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm2.weight_ih_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm2.weight_hh_l0, gain=np.sqrt(2))
 
   def forward(self, input):
     conv1_out = self.conv1(input)
@@ -44,10 +44,10 @@ class ConvLSTMDecoder(nn.Module):
       self.r4 = nn.ReLU()
   
       #initialize weights
-      nn.init.xavier_uniform(self.lstm1.weight_ih_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm1.weight_hh_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm2.weight_ih_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm2.weight_hh_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm1.weight_ih_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm1.weight_hh_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm2.weight_ih_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm2.weight_hh_l0, gain=np.sqrt(2))
 
   def forward(self, input):
     lstm1_out, _ = self.lstm1(input)
@@ -62,10 +62,10 @@ class ConvLSTMDecoder(nn.Module):
   
 class ConvLSTMAE_v0(nn.Module):
   def __init__(self, cutoff=0):
-      super(ConvLSTMAE, self).__init__()
+      super(ConvLSTMAE_v0, self).__init__()
       self.cutoff = cutoff
-      self.encoder = ConvLSTMEncoder().cuda(0)
-      self.decoder = ConvLSTMDecoder().cuda(0)
+      self.encoder = ConvLSTMEncoder()
+      self.decoder = ConvLSTMDecoder()
 
   def forward(self, input):
       encoded_input = self.encoder(input)

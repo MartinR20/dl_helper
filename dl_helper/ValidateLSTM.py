@@ -18,6 +18,6 @@ class ValidateLSTM(nn.Module):
     rnn_outputs, hidden = self.lstm(input)
     stacked_rnn_outputs = rnn_outputs.contiguous().view(-1, self.hidden_size)
     stacked_outputs = self.linear(stacked_rnn_outputs)
-    outputs = stacked_outputs.view(-1, n_steps, self.output_size)
-    outputs = outputs[:,self.cutoff:,:] # keep only last output of sequence
+    outputs = stacked_outputs.view(-1, self.cutoff, self.output_size)
+    #outputs = stacked_outputs[:,self.cutoff:,:] # keep only last output of sequence
     return outputs

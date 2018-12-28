@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.autograd import Variable 
 import numpy as np
 
 class EncoderRNN(nn.Module):
@@ -14,8 +15,8 @@ class EncoderRNN(nn.Module):
       self.relu = nn.ReLU()
 
       #initialize weights
-      nn.init.xavier_uniform(self.lstm.weight_ih_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm.weight_hh_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm.weight_ih_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm.weight_hh_l0, gain=np.sqrt(2))
 
   def forward(self, input):
       tt = torch.cuda if self.isCuda else torch
@@ -38,8 +39,8 @@ class DecoderRNN(nn.Module):
       self.sigmoid = nn.Sigmoid()
 
       #initialize weights
-      nn.init.xavier_uniform(self.lstm.weight_ih_l0, gain=np.sqrt(2))
-      nn.init.xavier_uniform(self.lstm.weight_hh_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm.weight_ih_l0, gain=np.sqrt(2))
+      nn.init.xavier_uniform_(self.lstm.weight_hh_l0, gain=np.sqrt(2))
 
   def forward(self, encoded_input):
       tt = torch.cuda if self.isCuda else torch
