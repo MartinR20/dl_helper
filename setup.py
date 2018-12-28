@@ -12,6 +12,7 @@ setup(name='dl_helper',
           'sklearn',
           'pandas',
           'numpy',
-          'psutil'
+          'psutil',
+          'tqdm'
       ],
       zip_safe=False)
