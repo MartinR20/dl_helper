@@ -11,7 +11,6 @@ class dataObj():
     print('...loading data')
     # import all stock prices 
     df = pd.read_csv(path, index_col = 0, encoding='utf-8-sig')
-    print(df.keys(), df.index.name)
     
     print('...processing data')
     data, self.companys = self.__get_matrix__(df, (1762,4), seq_len)
