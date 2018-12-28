@@ -27,8 +27,8 @@ class ConvLSTMAE_v1(nn.Module):
     self.lstm0 = nn.LSTM(20,20,lstm_layers,batch_first=True)
     self.tanlstm0 = nn.Tanh()
 
-    nn.init.xavier_uniform(self.lstm0.weight_ih_l0, gain=np.sqrt(2))
-    nn.init.xavier_uniform(self.lstm0.weight_hh_l0, gain=np.sqrt(2))
+    nn.init.xavier_uniform_(self.lstm0.weight_ih_l0, gain=np.sqrt(2))
+    nn.init.xavier_uniform_(self.lstm0.weight_hh_l0, gain=np.sqrt(2))
     
     #decode
     self.maxunpool0 = nn.MaxUnpool1d(2)
