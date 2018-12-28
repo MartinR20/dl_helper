@@ -51,7 +51,7 @@ class dataObj():
     data = []
 
     df.drop(['volume'],1,inplace=True) 
-    df.sort_values(['symbol','date'],inplace=True)
+    df.sort_values([u'symbol',u'date'],inplace=True)
 
     ## initalize object for normalization
     min_max_scaler = sklearn.preprocessing.MinMaxScaler()
