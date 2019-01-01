@@ -5,44 +5,44 @@ import numpy as np
 class ConvLSTMAE_v1(nn.Module):
   #epoch:99 train_loss:0.0003731108154170215 valid_loss:0.019016167148947716
 
-  def __init__(self, cutoff=0, lstm_layers=5):
+  def __init__(self, cutoff=0, lstm_layers=5, activation=nn.Tanh):
     super(ConvLSTMAE_v1, self).__init__()
     self.cutoff = cutoff
 
     #encode
     self.conv0 = nn.Conv1d(100,200, 4, stride=2, padding=1)
-    self.tanconv0 = nn.LeakyReLU()
+    self.tanconv0 = activation()
     self.conv1 = nn.Conv1d(200,400, 4, stride=2, padding=0)
-    self.tanconv1 = nn.LeakyReLU()
+    self.tanconv1 = activation()
     self.maxpool0 = nn.MaxPool1d(3, return_indices=True)
-    self.tanmaxpool0 = nn.LeakyReLU()
+    self.tanmaxpool0 = activation()
     self.conv2 = nn.Conv1d(400, 800, 4, stride=2, padding=2)
-    self.tanconv2 = nn.LeakyReLU()
+    self.tanconv2 = activation()
     self.conv3 = nn.Conv1d(800, 1600, 4, stride=2, padding=0)
-    self.tanconv3 = nn.LeakyReLU()
+    self.tanconv3 = activation()
     self.maxpool1 = nn.MaxPool1d(2, return_indices=True)
-    self.relumaxpool1 = nn.LeakyReLU()
+    self.relumaxpool1 = activation()
     
     #lstm
     self.lstm0 = nn.LSTM(20,20,lstm_layers,batch_first=True)
-    self.tanlstm0 = nn.LeakyReLU()
+    self.tanlstm0 = activation()
 
     nn.init.xavier_uniform_(self.lstm0.weight_ih_l0, gain=np.sqrt(2))
     nn.init.xavier_uniform_(self.lstm0.weight_hh_l0, gain=np.sqrt(2))
     
     #decode
     self.maxunpool0 = nn.MaxUnpool1d(2)
-    self.tanmaxunpool0 = nn.LeakyReLU()
+    self.tanmaxunpool0 = activation()
     self.convt0 = nn.ConvTranspose1d(1600, 800, 4, stride=2, padding=0)
-    self.tanconvt0 = nn.LeakyReLU()
+    self.tanconvt0 = activation()
     self.convt1 = nn.ConvTranspose1d(800, 400, 4, stride=2, padding=2)
-    self.tanconvt1 = nn.LeakyReLU()
+    self.tanconvt1 = activation()
     self.maxunpool1 = nn.MaxUnpool1d(3)
-    self.tanmaxunpool1 = nn.LeakyReLU()
+    self.tanmaxunpool1 = activation()
     self.convt2 = nn.ConvTranspose1d(400, 200, 4, stride=2, padding=0)
-    self.tanconvt2 = nn.LeakyReLU()
+    self.tanconvt2 = activation()
     self.convt3 = nn.ConvTranspose1d(200, 100, 4, stride=2, padding=1)
-    self.tanconvt3 = nn.LeakyReLU()
+    self.tanconvt3 = activation()
     
     #output
     self.lin0 = nn.Linear(2004, 2004)
