@@ -79,6 +79,6 @@ class ConvLSTMAE_v1(nn.Module):
     out = self.tanconvt3(self.convt3(out))
     
     #out
-    out = self.relulin0(self.lin0(out[:,self.cutoff:,:]))
+    out = self.relulin0(self.lin0(out[:,self.cutoff-1,:]))
     
     return out
